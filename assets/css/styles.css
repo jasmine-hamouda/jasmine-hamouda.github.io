@@ -1,1 +1,1169 @@
+/* =============================================================
+   Jasmine Hamouda — Portfolio Site
+   styles.css
+   
+   Table of Contents:
+   1. CSS Variables (Design Tokens)
+   2. Reset & Base
+   3. Typography
+   4. Navigation
+   5. Hero Section
+   6. Section Utilities
+   7. About Section
+   8. Tech Stack Logos
+   9. Skills Section
+   10. Experience Section
+   11. Projects Section
+   12. Education Section
+   13. Genos / Soft Skills Section
+   14. Contact Section
+   15. Footer
+   16. Animations & Scroll Reveal
+   17. Dark Mode
+   18. Responsive (Mobile)
+   ============================================================= */
 
+
+/* ── 1. CSS VARIABLES ── */
+:root {
+  /* Colours */
+  --navy:        #2D4A6E;
+  --slate:       #4A6FA5;
+  --slate-soft:  #8BA7CC;
+  --off-white:   #F8F6F2;
+  --cream:       #F2EEE8;
+  --body:        #4A4540;
+  --muted:       #7A7570;
+  --border:      #E8E4DF;
+
+  /* Dark mode colours — toggled via .dark class on <html> */
+  --dark-bg:       #111827;
+  --dark-surface:  #1F2937;
+  --dark-border:   #374151;
+  --dark-body:     #D1D5DB;
+  --dark-muted:    #9CA3AF;
+
+  /* Spacing */
+  --section-pad: 4rem 3rem;
+  --max-width:   900px;
+
+  /* Transitions */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-reveal: 0.55s ease;
+
+  /* Border radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+}
+
+
+/* ── 2. RESET & BASE ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--off-white);
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* ── 3. TYPOGRAPHY ── */
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
+/* DM Serif Display — display headings only */
+.display {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+}
+
+
+/* ── 4. NAVIGATION ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--navy);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--off-white);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.nav-name:hover {
+  opacity: 0.8;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: var(--slate-soft);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color var(--transition-base);
+  position: relative;
+}
+
+/* Underline animation on nav links */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--off-white);
+  transition: width var(--transition-base);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--off-white);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* Dark mode toggle button */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.dark-toggle {
+  background: transparent;
+  border: 1px solid rgba(139, 167, 204, 0.3);
+  border-radius: var(--radius-md);
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--slate-soft);
+  font-size: 14px;
+  transition: border-color var(--transition-base), color var(--transition-base);
+  line-height: 1;
+}
+
+.dark-toggle:hover {
+  border-color: var(--slate-soft);
+  color: var(--off-white);
+}
+
+
+/* ── 5. HERO SECTION ── */
+#hero {
+  background: var(--navy);
+  padding: 7rem 3rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circle */
+#hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: rgba(74, 111, 165, 0.12);
+  pointer-events: none;
+}
+
+/* Gradient accent line */
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--slate) 0%, transparent 100%);
+}
+
+/* Dot grid texture */
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(139, 167, 204, 0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Headshot */
+.headshot-wrap {
+  flex-shrink: 0;
+  animation: fadeDown 0.6s ease both;
+  position: relative;
+}
+
+.headshot {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 3px solid rgba(139, 167, 204, 0.35);
+  overflow: hidden;
+  background: linear-gradient(135deg, #3a5e88 0%, #2D4A6E 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: border-color var(--transition-base);
+}
+
+.headshot:hover {
+  border-color: var(--slate-soft);
+}
+
+.headshot svg {
+  opacity: 0.35;
+}
+
+.headshot-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(248, 246, 242, 0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.headshot-hint {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: rgba(139, 167, 204, 0.6);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+/* Hero text */
+.hero-text {
+  animation: fadeUp 0.7s ease 0.1s both;
+}
+
+.hero-text h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: var(--off-white);
+  line-height: 1.15;
+  margin-bottom: 0.4rem;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--slate-soft);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate-soft);
+  background: rgba(74, 111, 165, 0.2);
+  border: 1px solid rgba(74, 111, 165, 0.35);
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--slate);
+  color: var(--off-white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: #3d5e90;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--slate-soft);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(139, 167, 204, 0.3);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--transition-base), color var(--transition-base), transform var(--transition-fast);
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  border-color: var(--slate-soft);
+  color: var(--off-white);
+  transform: translateY(-1px);
+}
+
+
+/* ── 6. SECTION UTILITIES ── */
+.section {
+  padding: var(--section-pad);
+}
+
+.section-alt {
+  background: var(--cream);
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Decorative line after label */
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 60px;
+}
+
+
+/* ── 7. ABOUT SECTION ── */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-text {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--body);
+}
+
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.stat-desc {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+
+/* ── 8. TECH STACK LOGOS ── */
+.tech-stack-section {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.tech-stack-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.tech-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tech-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+  cursor: default;
+}
+
+.tech-logo:hover {
+  border-color: var(--slate-soft);
+  transform: translateY(-2px);
+}
+
+.tech-logo svg {
+  width: 28px; height: 28px;
+}
+
+.tech-logo span {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+
+/* ── 9. SKILLS SECTION ── */
+.skills-tag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.skill-tag-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.skill-tag-card:hover {
+  border-color: var(--slate-soft);
+  transform: translateY(-2px);
+}
+
+.skill-tag-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  font-size: 12px;
+  color: var(--body);
+  background: var(--border);
+  padding: 2px 9px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ── 10. EXPERIENCE SECTION ── */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.job {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+}
+
+.job:last-child {
+  border-bottom: none;
+}
+
+.job-date {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.job-org {
+  font-size: 12px;
+  color: var(--slate);
+  font-weight: 500;
+}
+
+.job-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.job-bullets li {
+  font-size: 13.5px;
+  color: var(--body);
+  padding: 3px 0 3px 16px;
+  position: relative;
+  line-height: 1.55;
+}
+
+/* Custom bullet dot */
+.job-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 11px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--slate-soft);
+}
+
+
+/* ── 11. PROJECTS SECTION ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.project-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left accent bar — appears on hover */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--slate);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.project-card:hover {
+  border-color: var(--slate-soft);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(45, 74, 110, 0.08);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.project-meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.project-badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--slate);
+  background: rgba(74, 111, 165, 0.1);
+  border: 1px solid rgba(74, 111, 165, 0.2);
+  padding: 2px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+
+/* ── 12. EDUCATION SECTION ── */
+.edu-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.edu-item:last-child {
+  border-bottom: none;
+}
+
+.edu-date {
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.edu-degree {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 3px;
+}
+
+.edu-school {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.edu-courses {
+  font-size: 12px;
+  color: var(--slate);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.additional-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.additional-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--body);
+}
+
+.additional-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--slate);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+
+/* ── 13. GENOS / SOFT SKILLS ── */
+.genos-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+  align-items: center;
+}
+
+.genos-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.genos-score-wrap {
+  position: relative;
+  width: 120px; height: 120px;
+}
+
+.genos-ring {
+  width: 120px; height: 120px;
+}
+
+.genos-score-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.genos-score-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem;
+  color: var(--off-white);
+  line-height: 1;
+}
+
+.genos-score-denom {
+  font-size: 13px;
+  color: var(--slate-soft);
+  margin-top: 2px;
+}
+
+.genos-percentile {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate-soft);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.genos-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 0.75rem;
+}
+
+.genos-desc {
+  font-size: 13.5px;
+  color: rgba(248, 246, 242, 0.72);
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.genos-competencies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.genos-comp {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate-soft);
+  background: rgba(74, 111, 165, 0.2);
+  border: 1px solid rgba(74, 111, 165, 0.3);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+
+.soft-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.soft-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.soft-card:hover {
+  border-color: var(--slate-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 74, 110, 0.07);
+}
+
+.soft-icon {
+  width: 36px; height: 36px;
+  background: rgba(74, 111, 165, 0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.9rem;
+}
+
+.soft-icon svg {
+  width: 18px; height: 18px;
+  stroke: var(--slate);
+}
+
+.soft-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.soft-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+
+/* ── 14. CONTACT SECTION ── */
+#contact {
+  background: var(--navy);
+  padding: 3rem;
+}
+
+.contact-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.contact-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: var(--off-white);
+  margin-bottom: 0.4rem;
+}
+
+.contact-sub {
+  font-size: 13px;
+  color: var(--slate-soft);
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--slate-soft);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color var(--transition-base);
+}
+
+.contact-link:hover {
+  color: var(--off-white);
+}
+
+.contact-icon {
+  width: 16px; height: 16px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* Contact form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 280px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.form-group input,
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(139, 167, 204, 0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--off-white);
+  transition: border-color var(--transition-base);
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(139, 167, 204, 0.4);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--slate-soft);
+}
+
+.form-success {
+  font-size: 13px;
+  color: #6ee7b7;
+  display: none;
+  padding: 8px 0;
+}
+
+.form-success.visible {
+  display: block;
+}
+
+
+/* ── 15. FOOTER ── */
+footer {
+  background: #1e3350;
+  padding: 1rem 3rem;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(248, 246, 242, 0.3);
+  letter-spacing: 0.04em;
+}
+
+
+/* ── 16. ANIMATIONS & SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-reveal), transform var(--transition-reveal);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── 17. DARK MODE ── */
+html.dark body {
+  background: var(--dark-bg);
+  color: var(--dark-body);
+}
+
+html.dark .section-alt {
+  background: var(--dark-surface);
+}
+
+html.dark .stat-card,
+html.dark .skill-tag-card,
+html.dark .tech-logo,
+html.dark .project-card,
+html.dark .soft-card {
+  background: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+html.dark .tag {
+  background: var(--dark-border);
+  color: var(--dark-body);
+}
+
+html.dark .stat-num,
+html.dark .job-title,
+html.dark .edu-degree,
+html.dark .project-name,
+html.dark .soft-name {
+  color: var(--off-white);
+}
+
+html.dark .about-text,
+html.dark .job-bullets li,
+html.dark .additional-item {
+  color: var(--dark-body);
+}
+
+html.dark .section-label,
+html.dark .skill-tag-label,
+html.dark .job-org,
+html.dark .edu-courses {
+  color: var(--slate-soft);
+}
+
+html.dark .stat-desc,
+html.dark .job-date,
+html.dark .edu-date,
+html.dark .edu-school,
+html.dark .project-meta,
+html.dark .project-desc,
+html.dark .soft-desc,
+html.dark .tech-logo span,
+html.dark .muted {
+  color: var(--dark-muted);
+}
+
+html.dark .section-label::after,
+html.dark .job,
+html.dark .edu-item,
+html.dark .tech-stack-section {
+  border-color: var(--dark-border);
+}
+
+html.dark .soft-icon {
+  background: rgba(74, 111, 165, 0.2);
+}
+
+
+/* ── 18. RESPONSIVE ── */
+@media (max-width: 720px) {
+  nav {
+    padding: 0 1.5rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .section {
+    padding: 3rem 1.5rem;
+  }
+
+  #hero {
+    padding: 6rem 1.5rem 3.5rem;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .hero-text h1 {
+    font-size: 1.9rem;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .job {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .edu-item {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  #contact {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .contact-inner {
+    flex-direction: column;
+  }
+
+  .genos-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .genos-competencies {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav-links {
+    display: none;
+  }
+}
