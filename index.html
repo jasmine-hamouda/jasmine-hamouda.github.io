@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jasmine Hamouda — IT Professional & Data Analytics Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#2D4A6E;--slate:#4A6FA5;--slate-soft:#8BA7CC;--off-white:#F8F6F2;--cream:#F2EEE8;--body:#4A4540;--muted:#7A7570;--border:#E8E4DF}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;color:var(--body);background:var(--off-white);-webkit-font-smoothing:antialiased}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--navy);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .nav-name{font-size:14px;font-weight:500;color:var(--off-white);letter-spacing:.04em;text-decoration:none}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{font-size:13px;color:var(--slate-soft);text-decoration:none;transition:color .2s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--off-white);transition:width .25s}
+  .nav-links a:hover,.nav-links a.active{color:var(--off-white)}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  #hero{background:var(--navy);padding:7rem 3rem 5rem;position:relative;overflow:hidden}
+  #hero::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:rgba(74,111,165,.12);pointer-events:none}
+  #hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--slate) 0%,transparent 100%)}
+  .hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(139,167,204,.18) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+  .hero-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:3rem;position:relative;z-index:1}
+  .headshot-wrap{flex-shrink:0;animation:fadeDown .6s ease both;position:relative}
+  .headshot{width:140px;height:140px;border-radius:50%;border:3px solid rgba(139,167,204,.35);overflow:hidden;background:linear-gradient(135deg,#3a5e88 0%,#2D4A6E 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:border-color .25s}
+  .headshot:hover{border-color:var(--slate-soft)}
+  .headshot svg{opacity:.35}
+  .headshot-label{font-size:10px;font-weight:500;color:rgba(248,246,242,.5);letter-spacing:.06em;text-transform:uppercase;text-align:center;line-height:1.4}
+  .headshot-hint{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(139,167,204,.6);white-space:nowrap;letter-spacing:.04em}
+  .hero-text{animation:fadeUp .7s ease .1s both}
+  .hero-text h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;color:var(--off-white);line-height:1.15;margin-bottom:.4rem}
+  .hero-subtitle{font-size:14px;color:var(--slate-soft);margin-bottom:1.2rem;letter-spacing:.02em}
+  .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;animation:fadeUp .7s ease .2s both}
+  .badge{font-size:11px;font-weight:500;color:var(--slate-soft);background:rgba(74,111,165,.2);border:1px solid rgba(74,111,165,.35);padding:3px 12px;border-radius:20px;letter-spacing:.03em}
+  .hero-actions{display:flex;gap:1rem;animation:fadeUp .7s ease .3s both}
+  .btn-primary{background:var(--slate);color:var(--off-white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:10px 22px;border-radius:6px;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;display:inline-block}
+  .btn-primary:hover{background:#3d5e90;transform:translateY(-1px)}
+  .btn-secondary{background:transparent;color:var(--slate-soft);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:10px 22px;border-radius:6px;border:1px solid rgba(139,167,204,.3);cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s,transform .15s;display:inline-block}
+  .btn-secondary:hover{border-color:var(--slate-soft);color:var(--off-white);transform:translateY(-1px)}
+  .section{padding:4rem 3rem}
+  .section-alt{background:var(--cream)}
+  .section-inner{max-width:900px;margin:0 auto}
+  .section-label{font-size:11px;font-weight:500;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);max-width:60px}
+  .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .about-text{font-size:14.5px;line-height:1.85;color:var(--body)}
+  .about-stats{display:flex;flex-direction:column;gap:1rem}
+  .stat-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem}
+  .stat-num{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--navy);line-height:1.1}
+  .stat-desc{font-size:12px;color:var(--muted);margin-top:2px}
+  .tech-stack-section{margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--border)}
+  .tech-stack-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .tech-logos{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .tech-logo{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 14px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;transition:border-color .2s,transform .2s;cursor:default}
+  .tech-logo:hover{border-color:var(--slate-soft);transform:translateY(-2px)}
+  .tech-logo svg{width:28px;height:28px}
+  .tech-logo span{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.04em}
+  .experience-list{display:flex;flex-direction:column}
+  .job{padding:1.5rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:160px 1fr;gap:2rem}
+  .job:last-child{border-bottom:none}
+  .job-date{font-size:12px;color:var(--muted);margin-bottom:4px}
+  .job-org{font-size:12px;color:var(--slate);font-weight:500}
+  .job-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:.6rem}
+  .job-bullets{list-style:none}
+  .job-bullets li{font-size:13.5px;color:var(--body);padding:3px 0 3px 16px;position:relative;line-height:1.55}
+  .job-bullets li::before{content:'';position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--slate-soft)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .project-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:1.4rem;transition:border-color .25s,transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+  .project-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--slate);opacity:0;transition:opacity .2s}
+  .project-card:hover{border-color:var(--slate-soft);transform:translateY(-3px);box-shadow:0 8px 24px rgba(45,74,110,.08)}
+  .project-card:hover::before{opacity:1}
+  .project-name{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:4px}
+  .project-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
+  .project-badge{font-size:10px;font-weight:500;color:var(--slate);background:rgba(74,111,165,.1);border:1px solid rgba(74,111,165,.2);padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px}
+  .project-desc{font-size:13px;color:var(--muted);line-height:1.55}
+  .edu-item{display:grid;grid-template-columns:160px 1fr;gap:2rem;padding:1.25rem 0;border-bottom:1px solid var(--border)}
+  .edu-item:last-child{border-bottom:none}
+  .edu-date{font-size:12px;color:var(--muted);padding-top:2px}
+  .edu-degree{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:3px}
+  .edu-school{font-size:13px;color:var(--muted);margin-bottom:6px}
+  .edu-courses{font-size:12px;color:var(--slate);font-style:italic;line-height:1.5}
+  .additional-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:.5rem}
+  .additional-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--body)}
+  .additional-dot{width:6px;height:6px;border-radius:50%;background:var(--slate);flex-shrink:0;margin-top:7px}
+  #contact{background:var(--navy);padding:3rem}
+  .contact-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .contact-heading{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--off-white);margin-bottom:.4rem}
+  .contact-sub{font-size:13px;color:var(--slate-soft)}
+  .contact-links{display:flex;flex-direction:column;gap:8px}
+  .contact-link{display:flex;align-items:center;gap:10px;color:var(--slate-soft);text-decoration:none;font-size:13px;transition:color .2s}
+  .contact-link:hover{color:var(--off-white)}
+  .contact-icon{width:16px;height:16px;opacity:.7}
+  footer{background:#1e3350;padding:1rem 3rem;text-align:center;font-size:11px;color:rgba(248,246,242,.3);letter-spacing:.04em}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-delay-1{transition-delay:.1s}
+  .reveal-delay-2{transition-delay:.2s}
+  .reveal-delay-3{transition-delay:.3s}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .skills-tag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .skill-tag-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:1.25rem;transition:border-color .2s,transform .2s}
+  .skill-tag-card:hover{border-color:var(--slate-soft);transform:translateY(-2px)}
+  .skill-tag-label{font-size:11px;font-weight:500;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:5px}
+  .tag{font-size:12px;color:var(--body);background:var(--border);padding:2px 9px;border-radius:4px}
+  @media(max-width:720px){
+    nav{padding:0 1.5rem}.nav-links{gap:1rem}.section{padding:3rem 1.5rem}
+    #hero{padding:6rem 1.5rem 3.5rem}.hero-inner{flex-direction:column;align-items:flex-start;gap:1.5rem}
+    .hero-text h1{font-size:1.9rem}.about-layout{grid-template-columns:1fr}
+    .job{grid-template-columns:1fr;gap:.25rem}
+    .edu-item{grid-template-columns:1fr;gap:.25rem}#contact{padding:2.5rem 1.5rem}
+    .contact-inner{flex-direction:column}
+  }
+  @media(max-width:400px){.nav-links{display:none}}
+  .genos-card{display:grid;grid-template-columns:180px 1fr;gap:2.5rem;background:var(--navy);border-radius:12px;padding:2rem 2.5rem;margin-bottom:2.5rem;align-items:center}
+  .genos-left{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+  .genos-score-wrap{position:relative;width:120px;height:120px}
+  .genos-ring{width:120px;height:120px}
+  .genos-score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .genos-score-num{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--off-white);line-height:1}
+  .genos-score-denom{font-size:13px;color:var(--slate-soft);margin-top:2px}
+  .genos-percentile{font-size:11px;font-weight:500;color:var(--slate-soft);letter-spacing:.06em;text-transform:uppercase;text-align:center}
+  .genos-title{font-size:15px;font-weight:500;color:var(--off-white);margin-bottom:.75rem}
+  .genos-desc{font-size:13.5px;color:rgba(248,246,242,.72);line-height:1.75;margin-bottom:1.25rem}
+  .genos-competencies{display:flex;flex-wrap:wrap;gap:7px}
+  .genos-comp{font-size:11px;font-weight:500;color:var(--slate-soft);background:rgba(74,111,165,.2);border:1px solid rgba(74,111,165,.3);padding:3px 10px;border-radius:20px;letter-spacing:.03em}
+  .soft-skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .soft-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:1.4rem;transition:border-color .2s,transform .2s,box-shadow .2s}
+  .soft-card:hover{border-color:var(--slate-soft);transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,74,110,.07)}
+  .soft-icon{width:36px;height:36px;background:rgba(74,111,165,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem}
+  .soft-icon svg{width:18px;height:18px;stroke:var(--slate)}
+  .soft-name{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:.5rem}
+  .soft-desc{font-size:13px;color:var(--muted);line-height:1.65}
+  @media(max-width:720px){.genos-card{grid-template-columns:1fr;text-align:center}.genos-competencies{justify-content:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#hero" class="nav-name">Jasmine Hamouda</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="headshot-wrap">
+      <div class="headshot" title="Replace src in index.html with your photo filename">
+        <svg viewBox="0 0 60 60" fill="none" width="54" height="54">
+          <circle cx="30" cy="20" r="12" fill="rgba(248,246,242,0.45)"/>
+          <path d="M6 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="rgba(248,246,242,0.3)"/>
+        </svg>
+        <div class="headshot-label">Add your<br>photo here</div>
+      </div>
+      <div class="headshot-hint">↑ swap with your photo</div>
+    </div>
+    <div class="hero-text">
+      <h1>Jasmine Hamouda</h1>
+      <p class="hero-subtitle">IT Student &middot; Data Analytics &amp; IoT &middot; HR &amp; Systems Professional &middot; Brisbane, QLD</p>
+      <div class="hero-badges">
+        <span class="badge">SQL &middot; Python &middot; MongoDB &middot; R</span>
+        <span class="badge">HRIS Systems</span>
+        <span class="badge">Data Analytics</span>
+        <span class="badge">AI-Literate</span>
+        <span class="badge">Prompt Engineering</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Get in Touch</a>
+        <a href="#experience" class="btn-secondary">View Experience</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-label">About</div>
+    <div class="about-layout">
+      <div>
+        <p class="about-text reveal">HR-to-IT professional with 2 years of experience in systems administration, process improvement, and data management across disability services, real estate, and HR technology. Currently completing a Bachelor of IT (Data Analytics &amp; IoT) at Griffith University, with 1.5 years of hands-on IT study covering SQL, Python, database design, and business analysis. Highly AI-literate with strong prompt engineering skills, utilising AI tools to work efficiently and amplify existing capabilities across technical and professional tasks.</p>
+        <div class="tech-stack-section reveal">
+          <div class="tech-stack-label">Technologies &amp; Tools</div>
+          <div class="tech-logos">
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><path d="M14 3C8.477 3 9 5.5 9 5.5V8h5v1H6.5S2 8.5 2 15s4.024 6.5 4.024 6.5H8v-3.1S7.8 15 10 15h8s2 .1 2-2V7s.3-4-6-4z" fill="#3776AB"/><path d="M14 27c5.523 0 5-2.5 5-2.5V22h-5v-1h7.5S26 21.5 26 15s-4.024-6.5-4.024-6.5H20v3.1s.2 3.4-2 3.4h-8s-2-.1-2 2v6s-.3 4 6 4z" fill="#FFD43B"/><circle cx="11" cy="6.5" r="1" fill="white"/><circle cx="17" cy="23.5" r="1" fill="white"/></svg>
+              <span>Python</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="9" rx="10" ry="4" fill="#00758F"/><path d="M4 9v5c0 2.21 4.477 4 10 4s10-1.79 10-4V9" fill="#00758F"/><path d="M4 14v6c0 2.21 4.477 4 10 4s10-1.79 10-4v-6" fill="#F29111" opacity=".85"/></svg>
+              <span>SQL</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><path d="M14 3c0 0-7 8.5-7 13a7 7 0 0 0 14 0C21 11.5 14 3 14 3z" fill="#4DB33D"/><rect x="13" y="19" width="2" height="6" rx="1" fill="#3FA037"/><path d="M14 3c0 0 7 8.5 7 13a7 7 0 0 1-7 7" fill="#3FA037"/></svg>
+              <span>MongoDB</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" fill="#276DC3"/><text x="7" y="20" font-family="Georgia,serif" font-weight="bold" font-size="15" fill="white">R</text></svg>
+              <span>R Studio</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" fill="#217346"/><path d="M8 9l4 5.5-4 5.5M16 20h5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Excel</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" fill="#0078D4"/><text x="6" y="19" font-family="sans-serif" font-weight="bold" font-size="10" fill="white">SP</text></svg>
+              <span>SharePoint</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" fill="#13B5EA"/><text x="5" y="19" font-family="sans-serif" font-weight="bold" font-size="12" fill="white">Xe</text></svg>
+              <span>Xero</span>
+            </div>
+            <div class="tech-logo">
+              <svg viewBox="0 0 28 28" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M14 2a12 12 0 0 0-3.794 23.386c.6.111.819-.26.819-.577v-2.165c-3.338.726-4.042-1.609-4.042-1.609-.546-1.386-1.332-1.755-1.332-1.755-1.089-.744.082-.729.082-.729 1.205.085 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.495.998.107-.776.418-1.305.762-1.605-2.665-.303-5.466-1.332-5.466-5.93 0-1.31.468-2.381 1.235-3.221-.123-.304-.535-1.527.117-3.182 0 0 1.008-.322 3.301 1.23A11.49 11.49 0 0 1 14 6.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.655.242 2.878.12 3.182.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.48 5.921.43.372.823 1.103.823 2.222v3.293c0 .32.218.694.825.576A12 12 0 0 0 14 2z" fill="#24292F"/></svg>
+              <span>GitHub</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card reveal"><div class="stat-num">200</div><div class="stat-desc">Employee records migrated with zero data loss</div></div>
+        <div class="stat-card reveal reveal-delay-1"><div class="stat-num">50+</div><div class="stat-desc">Staff NDIS audit — zero non-compliance findings</div></div>
+        <div class="stat-card reveal reveal-delay-2"><div class="stat-num">1 wk</div><div class="stat-desc">Self-taught Aurion HRIS to full proficiency</div></div>
+        <div class="stat-card reveal reveal-delay-3"><div class="stat-num">97/99</div><div class="stat-desc">Genos EI Assessment — Top 3% globally</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="skills">
+  <div class="section-inner">
+    <div class="section-label">Skills &amp; Expertise</div>
+    <div class="skills-tag-grid">
+      <div class="skill-tag-card reveal">
+        <div class="skill-tag-label">Technical</div>
+        <div class="skill-tags">
+          <span class="tag">SQL</span><span class="tag">Python</span><span class="tag">MongoDB</span>
+          <span class="tag">R / RStudio</span><span class="tag">Excel (Advanced)</span>
+          <span class="tag">Database Design</span><span class="tag">API Integration</span>
+          <span class="tag">Cybersecurity Fundamentals</span>
+        </div>
+      </div>
+      <div class="skill-tag-card reveal reveal-delay-1">
+        <div class="skill-tag-label">Systems</div>
+        <div class="skill-tags">
+          <span class="tag">TechnologyOne CI</span><span class="tag">Aurion HRIS</span>
+          <span class="tag">Employee Connect</span><span class="tag">Vaultre CRM</span>
+          <span class="tag">SharePoint</span><span class="tag">Go1 LMS</span>
+          <span class="tag">Xero</span><span class="tag">Splose</span><span class="tag">Proda</span>
+        </div>
+      </div>
+      <div class="skill-tag-card reveal reveal-delay-2">
+        <div class="skill-tag-label">Business</div>
+        <div class="skill-tags">
+          <span class="tag">Requirements Analysis</span><span class="tag">Process Documentation</span>
+          <span class="tag">Data Validation &amp; Migration</span><span class="tag">Compliance Reporting</span>
+          <span class="tag">Stakeholder Management</span><span class="tag">Agile</span>
+          <span class="tag">Technical Writing</span><span class="tag">User Training</span>
+        </div>
+      </div>
+      <div class="skill-tag-card reveal reveal-delay-3">
+        <div class="skill-tag-label">AI &amp; Productivity</div>
+        <div class="skill-tags">
+          <span class="tag">Prompt Engineering</span><span class="tag">AI-assisted Workflows</span>
+          <span class="tag">Claude</span><span class="tag">ChatGPT</span>
+          <span class="tag">Business Analysis</span><span class="tag">Design Thinking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-label">Work Experience</div>
+    <div class="experience-list">
+      <div class="job reveal">
+        <div><div class="job-date">Jun 2023 – Oct 2023</div><div class="job-org">RE/MAX Residence &middot; Brisbane</div></div>
+        <div><div class="job-title">Office Manager</div><ul class="job-bullets">
+          <li>Administered Vaultre CRM for 15+ users including listings, access management, troubleshooting, and automated report generation — primary system administrator for the office</li>
+          <li>Built Excel-based financial tracking systems for settlement costs and marketing expenditure, improving data visibility and reducing reconciliation time</li>
+          <li>Authored a 20-page process manual documenting all business workflows — created unprompted, adopted team-wide, and used as the primary onboarding reference</li>
+          <li>Configured computers and systems for new employees including software installation, network access, and user account management</li>
+        </ul></div>
+      </div>
+      <div class="job reveal">
+        <div><div class="job-date">Jan 2023 – Mar 2023</div><div class="job-org">Genuity &middot; Brisbane</div></div>
+        <div><div class="job-title">Human Resources Coordinator</div><ul class="job-bullets">
+          <li>Supported Employee Connect HRIS implementation — sprint planning, workflow design, and data accuracy validation throughout the full solution lifecycle</li>
+          <li>Cleansed and validated 200 employee records for HRIS migration, confirming zero data loss throughout transition</li>
+          <li>Delivered WGEA statutory compliance report independently — extracting, analysing, and presenting workforce data to meet regulatory requirements</li>
+          <li>Self-taught SharePoint administration and redesigned the HR intranet for improved usability and functionality</li>
+        </ul></div>
+      </div>
+      <div class="job reveal">
+        <div><div class="job-date">Jul 2022 – Dec 2022</div><div class="job-org">Open Futures &middot; Rocklea</div></div>
+        <div><div class="job-title">Administration Officer</div><ul class="job-bullets">
+          <li>Prepared NDIS audit documentation for 50+ employees, achieving zero non-compliance findings through rigorous information management</li>
+          <li>Built a Risk Management System in Excel from scratch including continuous improvement and risk registers</li>
+          <li>Identified process inefficiencies and implemented email automation and editable PDF systems, reducing administrative effort team-wide</li>
+        </ul></div>
+      </div>
+      <div class="job reveal">
+        <div><div class="job-date">Nov 2021 – Jul 2022</div><div class="job-org">Multicap &middot; Brisbane</div></div>
+        <div><div class="job-title">Human Resources Administrator</div><ul class="job-bullets">
+          <li>Maintained data accuracy across TechnologyOne CI Anywhere (1,200 employees) and Aurion (500 employees) simultaneously</li>
+          <li>Self-taught Aurion HRIS to full operational proficiency within one week without formal training, supporting 500-person organisation from day one</li>
+          <li>Identified and resolved payroll discrepancies through systematic data analysis, documenting and escalating findings with clear supporting evidence</li>
+          <li>Trained two new HR team members on systems, processes, and enterprise agreement interpretation</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="projects">
+  <div class="section-inner">
+    <div class="section-label">Projects</div>
+    <div class="projects-grid">
+      <div class="project-card reveal"><div class="project-badge">High Distinction</div><div class="project-name">Business Analysis — Fluir</div><div class="project-meta">Griffith University &middot; 2026</div><div class="project-desc">TAM/SAM/SOM market analysis, full Business Model Canvas across 9 components, and a 5-minute evidence-based stakeholder pitch applying Lean Startup principles.</div></div>
+      <div class="project-card reveal reveal-delay-1"><div class="project-name">Business Analysis — WattWise</div><div class="project-meta">Griffith University &middot; 2026</div><div class="project-desc">Requirements elicitation using AI-simulated persona interviews, producing empathy maps and functional specifications for a 6-page web app. Coordinated a 6-person agile team via GitHub.</div></div>
+      <div class="project-card reveal reveal-delay-2"><div class="project-name">Big Data Analytics — IMDb</div><div class="project-meta">Griffith University &middot; 2026 &middot; Current</div><div class="project-desc">85,000+ record dataset using MongoDB and Mongosh — filter queries, JSON Schema validation. Classification modelling in R/RStudio using tidyverse, ggplot2, and rpart.</div></div>
+      <div class="project-card reveal reveal-delay-3"><div class="project-name">Family Board — PWA</div><div class="project-meta">Personal Project &middot; 2025</div><div class="project-desc">Household management progressive web app built with React, Vite, and Supabase — full-stack thinking and real-world deployment experience.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <div class="section-inner">
+    <div class="section-label">Education</div>
+    <div class="edu-item reveal">
+      <div class="edu-date">Feb 2026 – Present</div>
+      <div><div class="edu-degree">Bachelor of Information Technology</div><div class="edu-school">Griffith University &middot; Major: Data Analytics &amp; Internet of Things (IoT) &middot; Part-time online</div><div class="edu-courses">SQL &middot; Python &middot; Database Design &middot; System Analysis &middot; Requirements Analysis &middot; Big Data Analytics (MongoDB, R) &middot; Cybersecurity Fundamentals &middot; Programming for Robotics (C++, ESP32)</div></div>
+    </div>
+    <div class="edu-item reveal reveal-delay-1">
+      <div class="edu-date">Completed Feb 2026</div>
+      <div><div class="edu-degree">Diploma of Information Technology</div><div class="edu-school">Griffith College &middot; Brisbane CBD</div></div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="section-label">Additional</div>
+      <div class="additional-grid">
+        <div class="additional-item reveal"><div class="additional-dot"></div><span>Full unrestricted working rights in Australia</span></div>
+        <div class="additional-item reveal reveal-delay-1"><div class="additional-dot"></div><span>Available for permanent, contract, or temporary roles</span></div>
+        <div class="additional-item reveal reveal-delay-2"><div class="additional-dot"></div><span>Open to office-based, hybrid, or remote work</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENOS + SOFT SKILLS -->
+<section class="section" id="softskills">
+  <div class="section-inner">
+    <div class="section-label">Emotional Intelligence &amp; Soft Skills</div>
+
+    <!-- Genos Hero Card -->
+    <div class="genos-card reveal">
+      <div class="genos-left">
+        <div class="genos-score-wrap">
+          <svg class="genos-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(139,167,204,0.15)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="url(#genos-grad)" stroke-width="10"
+              stroke-dasharray="326.7" stroke-dashoffset="9.8"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <defs>
+              <linearGradient id="genos-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2D4A6E"/>
+                <stop offset="100%" stop-color="#8BA7CC"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="genos-score-inner">
+            <div class="genos-score-num">97</div>
+            <div class="genos-score-denom">/99</div>
+          </div>
+        </div>
+        <div class="genos-percentile">Top 3% globally</div>
+      </div>
+      <div class="genos-right">
+        <div class="genos-title">Genos Emotional Intelligence Assessment</div>
+        <p class="genos-desc">The Genos EI Assessment is a peer-reviewed, psychometrically validated instrument used by leading organisations worldwide to measure emotional intelligence across six core competencies. Scoring 97/99 places me in the top 3% of all respondents globally — reflecting an exceptional ability to recognise, understand, and purposefully apply emotions in professional contexts.</p>
+        <div class="genos-competencies">
+          <span class="genos-comp">Self-awareness</span>
+          <span class="genos-comp">Awareness of others</span>
+          <span class="genos-comp">Authenticity</span>
+          <span class="genos-comp">Emotional reasoning</span>
+          <span class="genos-comp">Self-management</span>
+          <span class="genos-comp">Inspiring performance</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soft Skills Grid -->
+    <div class="soft-skills-grid">
+
+      <div class="soft-card reveal">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="soft-name">Stakeholder Communication</div>
+        <div class="soft-desc">Proven ability to translate technical concepts for non-technical audiences and maintain productive relationships across all levels — from frontline staff to general managers. Demonstrated through HRIS implementations, compliance reporting, and cross-functional team coordination.</div>
+      </div>
+
+      <div class="soft-card reveal reveal-delay-1">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <div class="soft-name">Self-Directed Learning</div>
+        <div class="soft-desc">Consistently self-taught complex enterprise systems under pressure — including Aurion HRIS (full proficiency in one week), SharePoint administration, and Go1 LMS — without formal training. Applies the same approach to technical study in SQL, Python, MongoDB, and R.</div>
+      </div>
+
+      <div class="soft-card reveal reveal-delay-2">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="soft-name">Attention to Detail</div>
+        <div class="soft-desc">Zero data loss across a 200-employee HRIS migration. Zero non-compliance findings across a 50+ staff NDIS audit. These outcomes reflect a systematic approach to data integrity, documentation, and process adherence that consistently produces measurable results.</div>
+      </div>
+
+      <div class="soft-card reveal reveal-delay-3">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <div class="soft-name">Proactive Problem Solving</div>
+        <div class="soft-desc">Repeatedly identified and acted on problems before being asked — including building a 20-page process manual at RE/MAX unprompted, implementing email automation at Open Futures, and escalating payroll discrepancies at Multicap before processing errors could occur.</div>
+      </div>
+
+      <div class="soft-card reveal">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div class="soft-name">AI-Augmented Efficiency</div>
+        <div class="soft-desc">Highly proficient in leveraging AI tools including Claude and ChatGPT to accelerate research, drafting, analysis, and problem solving. Applies prompt engineering deliberately — using AI as a productivity multiplier rather than a replacement for critical thinking.</div>
+      </div>
+
+      <div class="soft-card reveal reveal-delay-1">
+        <div class="soft-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="soft-name">Adaptability Across Domains</div>
+        <div class="soft-desc">Transitioned from a 2-year HR career into IT study while maintaining professional work and family commitments. Comfortable operating across disability services, energy trading, real estate, healthcare, and education sectors — each with distinct systems, culture, and compliance requirements.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div><div class="contact-heading">Let's connect</div><div class="contact-sub">Open to opportunities across IT, data, and HR-tech roles in Brisbane and remote.</div></div>
+    <div class="contact-links">
+      <a href="mailto:jasminehamouda@icloud.com" class="contact-link"><svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>jasminehamouda@icloud.com</a>
+      <a href="https://linkedin.com/in/jasminehamouda" class="contact-link" target="_blank"><svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg>linkedin.com/in/jasminehamouda</a>
+      <a href="https://jasmine-hamouda.github.io" class="contact-link" target="_blank"><svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>jasmine-hamouda.github.io</a>
+    </div>
+  </div>
+</section>
+<footer>Jasmine Hamouda &middot; Brisbane, QLD &middot; Built with care</footer>
+
+<script>
+  const reveals=document.querySelectorAll('.reveal');
+  const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');ro.unobserve(x.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  reveals.forEach(el=>ro.observe(el));
+
+  const sections=document.querySelectorAll('section[id]');
+  const navLinks=document.querySelectorAll('.nav-links a');
+  const no=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.nav-links a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})},{threshold:.4});
+  sections.forEach(s=>no.observe(s));
+
+
+</script>
+</body>
+</html>
