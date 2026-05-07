@@ -414,11 +414,12 @@ nav {
 
 
 /* ── 7. ABOUT SECTION ── */
-.about-layout {
+.about-top {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 2fr 1fr;
   gap: 3rem;
   align-items: start;
+  margin-bottom: 2rem;
 }
 
 .about-text {
@@ -452,7 +453,6 @@ nav {
   color: var(--muted);
   margin-top: 2px;
 }
-
 
 /* ── 8. TECH STACK LOGOS ── */
 .tech-stack-section {
@@ -1127,10 +1127,6 @@ html.dark .soft-icon {
     font-size: 1.9rem;
   }
 
-  .about-layout {
-    grid-template-columns: 1fr;
-  }
-
   .job {
     grid-template-columns: 1fr;
     gap: 0.25rem;
@@ -1162,5 +1158,11 @@ html.dark .soft-icon {
 @media (max-width: 400px) {
   .nav-links {
     display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .about-top {
+    grid-template-columns: 1fr;
   }
 }
