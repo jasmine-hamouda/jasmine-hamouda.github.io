@@ -1,0 +1,159 @@
+{
+  "name": "Jasmine Hamouda",
+  "title": "IT Student · Data Analytics & IoT · HR & Systems Professional",
+  "location": "Brisbane, QLD",
+  "email": "jasminehamouda@icloud.com",
+  "linkedin": "https://linkedin.com/in/jasminehamouda",
+  "github": "https://github.com/jasmine-hamouda",
+  "badges": ["SQL · Python · MongoDB · R", "HRIS Systems", "Data Analytics", "AI-Literate", "Prompt Engineering"],
+  "about": "HR-to-IT professional with 2 years of experience in systems administration, process improvement, and data management across disability services, real estate, and HR technology. Currently completing a Bachelor of IT (Data Analytics & IoT) at Griffith University, with 1.5 years of hands-on IT study covering SQL, Python, database design, and business analysis. Highly AI-literate with strong prompt engineering skills, utilising AI tools to work efficiently and amplify existing capabilities across technical and professional tasks.",
+  "stats": [
+    { "num": "200", "desc": "Employee records migrated with zero data loss" },
+    { "num": "50+", "desc": "Staff NDIS audit — zero non-compliance findings" },
+    { "num": "1 wk", "desc": "Self-taught Aurion HRIS to full proficiency" },
+    { "num": "97/99", "desc": "Genos EI Assessment — Top 3% globally" }
+  ],
+  "skills": [
+    {
+      "category": "Technical",
+      "items": ["SQL", "Python", "MongoDB", "R / RStudio", "Excel (Advanced)", "Database Design", "API Integration", "Cybersecurity Fundamentals"]
+    },
+    {
+      "category": "Systems",
+      "items": ["TechnologyOne CI", "Aurion HRIS", "Employee Connect", "Vaultre CRM", "SharePoint", "Go1 LMS", "Xero", "Splose", "Proda"]
+    },
+    {
+      "category": "Business",
+      "items": ["Requirements Analysis", "Process Documentation", "Data Validation & Migration", "Compliance Reporting", "Stakeholder Management", "Agile", "Technical Writing", "User Training"]
+    },
+    {
+      "category": "AI & Productivity",
+      "items": ["Prompt Engineering", "AI-assisted Workflows", "Claude", "ChatGPT", "Business Analysis", "Design Thinking"]
+    }
+  ],
+  "experience": [
+    {
+      "title": "Office Manager",
+      "org": "RE/MAX Residence",
+      "location": "Brisbane",
+      "start": "Jun 2023",
+      "end": "Oct 2023",
+      "bullets": [
+        "Administered Vaultre CRM for 15+ users including listings, access management, troubleshooting, and automated report generation — primary system administrator for the office",
+        "Built Excel-based financial tracking systems for settlement costs and marketing expenditure, improving data visibility and reducing reconciliation time",
+        "Authored a 20-page process manual documenting all business workflows — created unprompted, adopted team-wide, and used as the primary onboarding reference",
+        "Configured computers and systems for new employees including software installation, network access, and user account management"
+      ]
+    },
+    {
+      "title": "Human Resources Coordinator",
+      "org": "Genuity",
+      "location": "Brisbane",
+      "start": "Jan 2023",
+      "end": "Mar 2023",
+      "bullets": [
+        "Supported Employee Connect HRIS implementation — sprint planning, workflow design, and data accuracy validation throughout the full solution lifecycle",
+        "Cleansed and validated 200 employee records for HRIS migration, confirming zero data loss throughout transition",
+        "Delivered WGEA statutory compliance report independently — extracting, analysing, and presenting workforce data to meet regulatory requirements",
+        "Self-taught SharePoint administration and redesigned the HR intranet for improved usability and functionality"
+      ]
+    },
+    {
+      "title": "Administration Officer",
+      "org": "Open Futures Disability Services",
+      "location": "Rocklea",
+      "start": "Jul 2022",
+      "end": "Dec 2022",
+      "bullets": [
+        "Prepared NDIS audit documentation for 50+ employees, achieving zero non-compliance findings through rigorous information management",
+        "Built a Risk Management System in Excel from scratch including continuous improvement and risk registers",
+        "Identified process inefficiencies and implemented email automation and editable PDF systems, reducing administrative effort team-wide"
+      ]
+    },
+    {
+      "title": "Human Resources Administrator",
+      "org": "Multicap",
+      "location": "Brisbane",
+      "start": "Nov 2021",
+      "end": "Jul 2022",
+      "bullets": [
+        "Maintained data accuracy across TechnologyOne CI Anywhere (1,200 employees) and Aurion (500 employees) simultaneously",
+        "Self-taught Aurion HRIS to full operational proficiency within one week without formal training, supporting 500-person organisation from day one",
+        "Identified and resolved payroll discrepancies through systematic data analysis, documenting and escalating findings with clear supporting evidence",
+        "Trained two new HR team members on systems, processes, and enterprise agreement interpretation"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Business Analysis — Fluir",
+      "org": "Griffith University",
+      "year": "2026",
+      "badge": "High Distinction",
+      "desc": "TAM/SAM/SOM market analysis, full Business Model Canvas across 9 components, and a 5-minute evidence-based stakeholder pitch applying Lean Startup principles."
+    },
+    {
+      "name": "Business Analysis — WattWise",
+      "org": "Griffith University",
+      "year": "2026",
+      "badge": null,
+      "desc": "Requirements elicitation using AI-simulated persona interviews, producing empathy maps and functional specifications for a 6-page web app. Coordinated a 6-person agile team via GitHub."
+    },
+    {
+      "name": "Big Data Analytics — IMDb",
+      "org": "Griffith University",
+      "year": "2026 · Current",
+      "badge": null,
+      "desc": "85,000+ record dataset using MongoDB and Mongosh — filter queries, JSON Schema validation. Classification modelling in R/RStudio using tidyverse, ggplot2, and rpart."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Information Technology",
+      "school": "Griffith University",
+      "detail": "Major: Data Analytics & Internet of Things (IoT) · Part-time online",
+      "start": "Feb 2026",
+      "end": "Present",
+      "courses": "SQL · Python · Database Design · System Analysis · Requirements Analysis · Big Data Analytics (MongoDB, R) · Cybersecurity Fundamentals · Programming for Robotics (C++, ESP32)"
+    },
+    {
+      "degree": "Diploma of Information Technology",
+      "school": "Griffith College",
+      "detail": "Brisbane CBD",
+      "start": null,
+      "end": "Completed Feb 2026",
+      "courses": null
+    }
+  ],
+  "additional": [
+    "Full unrestricted working rights in Australia",
+    "Available for permanent, contract, or temporary roles",
+    "Open to office-based, hybrid, or remote work"
+  ],
+  "softSkills": [
+    {
+      "name": "Stakeholder Communication",
+      "desc": "Proven ability to translate technical concepts for non-technical audiences and maintain productive relationships across all levels — from frontline staff to general managers."
+    },
+    {
+      "name": "Self-Directed Learning",
+      "desc": "Consistently self-taught complex enterprise systems under pressure — including Aurion HRIS (full proficiency in one week), SharePoint, and Go1 LMS — without formal training."
+    },
+    {
+      "name": "Attention to Detail",
+      "desc": "Zero data loss across a 200-employee HRIS migration. Zero non-compliance findings across a 50+ staff NDIS audit. Systematic approach to data integrity that consistently produces measurable results."
+    },
+    {
+      "name": "Proactive Problem Solving",
+      "desc": "Repeatedly identified and acted on problems before being asked — including building a 20-page process manual at RE/MAX unprompted and implementing email automation at Open Futures."
+    },
+    {
+      "name": "AI-Augmented Efficiency",
+      "desc": "Highly proficient in leveraging AI tools including Claude and ChatGPT to accelerate research, drafting, analysis, and problem solving using deliberate prompt engineering."
+    },
+    {
+      "name": "Adaptability Across Domains",
+      "desc": "Transitioned from a 2-year HR career into IT study while maintaining professional work and family commitments across disability services, real estate, and healthcare sectors."
+    }
+  ]
+}
