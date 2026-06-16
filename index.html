@@ -1264,9 +1264,9 @@ body{
       <span class="vstamp-d" aria-hidden="true">✓ live</span>
       <p class="proj-type">Web Development · Design · 2026</p>
       <h3 class="proj-title">This Portfolio</h3>
-      <p class="proj-sub">HTML · CSS · JS · Gemini API · Prompt Engineering · Interface Design</p>
-      <p class="proj-body">I built this site as a live demonstration of AI-augmented project direction. Across 8 deliberate design iterations I applied custom-built skill files for interface design, resume writing, frontend craft, and ATS optimisation - each a reusable system prompt encoding professional best practices. I integrated the Gemini API to build the Ask Jasmine widget using retrieval-augmented generation, grounding responses in my verified experience via a structured system prompt with role prompting, fact boundaries, and negative constraints. I used iterative critique loops to refine design and copy at each stage, reviewed and corrected code throughout, and managed context across a long multi-turn session to build on prior decisions. Directing AI effectively and editing its output critically is the skill. This site is what that looks like in practice.</p>
-      <span class="proj-badge">Live · Gemini API · RAG · Custom skill files · 8 iterations</span>
+      <p class="proj-sub">HTML · CSS · JS · Groq API · Prompt Engineering · Interface Design</p>
+      <p class="proj-body">I built this site as a live demonstration of AI-augmented project direction. Across 8 deliberate design iterations I applied custom-built skill files for interface design, resume writing, frontend craft, and ATS optimisation - each a reusable system prompt encoding professional best practices. I integrated the Groq API (Llama 3.3) to build the Ask Jasmine widget using retrieval-augmented generation, grounding responses in my verified experience via a structured system prompt with role prompting, fact boundaries, and negative constraints. I used iterative critique loops to refine design and copy at each stage, reviewed and corrected code throughout, and managed context across a long multi-turn session to build on prior decisions. Directing AI effectively and editing its output critically is the skill. This site is what that looks like in practice.</p>
+      <span class="proj-badge">Live · Groq API · RAG · Custom skill files · 8 iterations</span>
     </div>
 
   </div>
@@ -1319,7 +1319,7 @@ body{
   <div class="ask-inner">
     <div class="ask-label">
       <span>Ask Jasmine</span>
-      <span class="ask-powered">powered by gemini · grounded in my actual experience</span>
+      <span class="ask-powered">powered by groq · llama 3.3 · grounded in my actual experience</span>
     </div>
     <div class="ask-frame">
       <div class="ask-header">
@@ -1494,37 +1494,19 @@ async function askSend() {
   ajMsgs.push({role:'user',content:q});
   ajTyping(true);
   try {
-    // Build Gemini contents array from conversation history
-    const geminiContents = ajMsgs.map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
-
-    const GEMINI_KEY = 'YOUR_GEMINI_API_KEY'; // Replace with your key
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: AJ_SYSTEM }] },
-          contents: geminiContents,
-          generationConfig: {
-            maxOutputTokens: 512,
-            temperature: 0.7
-          }
-        })
-      }
-    );
+    const res = await fetch('/.netlify/functions/ask-jasmine', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: ajMsgs })
+    });
     const data = await res.json();
     ajTyping(false);
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
-      || "Something went wrong - email me at jasminehamouda@icloud.com.";
+    const reply = data.reply || 'Something went wrong - please reach out via LinkedIn.';
     ajMsgs.push({role:'assistant',content:reply});
     ajRender('jasmine', ajFormat(reply));
   } catch(e) {
     ajTyping(false);
-    ajRender('jasmine','Something went wrong. You can reach me directly at <strong>jasminehamouda@icloud.com</strong>.');
+    ajRender('jasmine','Something went wrong - find me on LinkedIn: linkedin.com/in/jasminehamouda');
   }
   ajBusy=false; btn.disabled=false; inp.focus();
 }
