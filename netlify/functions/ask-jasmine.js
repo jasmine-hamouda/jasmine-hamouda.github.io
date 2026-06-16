@@ -1,14 +1,4 @@
-exports.handler = async (event) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
-  };
-
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
-  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method not allowed' };
-
-  const AJ_SYSTEM = `You are Jasmine Hamouda, speaking in first person in a live chat on your portfolio website. A recruiter or hiring manager is talking to you. Answer naturally, warmly, and confidently - like a real person in a professional conversation. Keep answers concise: 2-4 sentences for simple questions, a short paragraph for complex ones. First person always.
+const AJ_SYSTEM = `You are Jasmine Hamouda, speaking in first person in a live chat on your portfolio website. A recruiter or hiring manager is talking to you. Answer naturally, warmly, and confidently - like a real person in a professional conversation. Keep answers concise: 2-4 sentences for simple questions, a short paragraph for complex ones. First person always.
 
 About you: Brisbane-based IT student and HRIS professional. Available immediately for permanent, contract, or temporary roles - hybrid or remote. Genos EQ 97/99, top 3% globally.
 
@@ -25,73 +15,63 @@ Projects: Pokénexus Discord bot (Python MySQL 40+ features), NDIS Power BI Dash
 
 If asked something outside your facts, suggest connecting on LinkedIn. Never fabricate.`;
 
+exports.handler = async (event) => {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json'
+  };
+
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method not allowed' };
+
   try {
     const { messages } = JSON.parse(event.body);
     if (!messages || !Array.isArray(messages)) {
       return { statusCode: 400, headers, body: JSON.stringify({ reply: 'Invalid request.' }) };
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      console.error('No API key');
+      console.error('GROQ_API_KEY not set');
       return { statusCode: 200, headers, body: JSON.stringify({ reply: 'Configuration error - please connect on LinkedIn.' }) };
     }
 
-    // Filter to only user messages and build clean alternating history
-    // Gemini requires: user, model, user, model... starting with user
-    const userMessages = messages.filter(m => m.role === 'user');
-    const assistantMessages = messages.filter(m => m.role === 'assistant');
+    // Groq uses OpenAI-compatible format - much simpler
+    const groqMessages = [
+      { role: 'system', content: AJ_SYSTEM },
+      ...messages.map(m => ({
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: String(m.content)
+      }))
+    ];
 
-    // Build strictly alternating contents starting with user
-    const contents = [];
-    const maxPairs = Math.max(userMessages.length, assistantMessages.length);
-    
-    for (let i = 0; i < userMessages.length; i++) {
-      contents.push({ role: 'user', parts: [{ text: String(userMessages[i].content) }] });
-      if (assistantMessages[i]) {
-        contents.push({ role: 'model', parts: [{ text: String(assistantMessages[i].content) }] });
-      }
-    }
-
-    // Make sure last message is from user
-    if (contents.length === 0 || contents[contents.length - 1].role !== 'user') {
-      return { statusCode: 400, headers, body: JSON.stringify({ reply: 'No user message found.' }) };
-    }
-
-    console.log('Contents count:', contents.length);
-    console.log('Last role:', contents[contents.length - 1].role);
-
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: AJ_SYSTEM }] },
-          contents,
-          generationConfig: { maxOutputTokens: 400, temperature: 0.75 },
-          safetySettings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-          ]
-        })
-      }
-    );
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: groqMessages,
+        max_tokens: 400,
+        temperature: 0.75
+      })
+    });
 
     const data = await res.json();
-    console.log('Gemini status:', res.status);
-    console.log('Gemini data:', JSON.stringify(data).slice(0, 800));
+    console.log('Groq status:', res.status);
+    console.log('Groq response:', JSON.stringify(data).slice(0, 500));
 
     if (!res.ok) {
-      console.error('Gemini error:', data?.error?.message);
-      return { statusCode: 200, headers, body: JSON.stringify({ reply: `Error ${res.status}: ${data?.error?.message || 'Unknown'} - please connect on LinkedIn.` }) };
+      console.error('Groq error:', data?.error?.message);
+      return { statusCode: 200, headers, body: JSON.stringify({ reply: `Error ${res.status} - please connect on LinkedIn.` }) };
     }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const reply = data.choices?.[0]?.message?.content;
     if (!reply) {
-      console.error('No reply text. Finish reason:', data.candidates?.[0]?.finishReason);
+      console.error('No reply from Groq');
       return { statusCode: 200, headers, body: JSON.stringify({ reply: 'Something went wrong - please connect on LinkedIn.' }) };
     }
 
